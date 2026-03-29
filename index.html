@@ -282,6 +282,12 @@
     ══════════════════════════════ */
         .reveal {
             opacity: 0;
+            transform: none;
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .js .reveal {
+            opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.7s ease, transform 0.7s ease;
         }
@@ -632,10 +638,14 @@
                 grid-column: auto;
             }
         }
+
+        .services {
+            min-height: 300px;
+        }
     </style>
 </head>
 
-<body>
+<body class="js">
 
     <!-- ═══ HERO ═══ -->
     <section class="hero">
@@ -648,10 +658,10 @@
                 <img src="images/hero-1.jpg" alt="Perforación de roca" />
             </div>
             <div class="carousel-slide">
-                <img src="images/hero-2.jpg" alt="Voladura de roca" loading="lazy" />
+                <img src="images/hero-2.jpg" alt="Voladura de roca" loading="lazy" decoding="async" />
             </div>
             <div class="carousel-slide">
-                <img src="images/hero-3.jpg" alt="Equipos mineros" loading="lazy" />
+                <img src="images/hero-3.jpg" alt="Equipos mineros" loading="lazy" decoding="async" />
             </div>
         </div>
 
@@ -684,7 +694,8 @@
         <div class="services-grid reveal-stagger">
 
             <div class="service-card">
-                <div class="service-img"><img src="images/perforacion.jpg" alt="Perforación" loading="lazy" /></div>
+                <div class="service-img"><img src="images/perforacion.jpg" alt="Perforación" loading="lazy"
+                        decoding="async" /></div>
                 <h3 class="service-name">Perforación</h3>
                 <ul class="svc-list">
                     <li>Perforación de roca con equipos neumáticos e hidráulicos para operaciones mineras superficiales
@@ -696,7 +707,8 @@
             </div>
 
             <div class="service-card">
-                <div class="service-img"><img src="images/voladura.jpg" alt="Voladura" loading="lazy" /></div>
+                <div class="service-img"><img src="images/voladura.jpg" alt="Voladura" loading="lazy"
+                        decoding="async" /></div>
                 <h3 class="service-name">Voladura</h3>
                 <ul class="svc-list">
                     <li>Diseño, planeamiento, ejecución y evaluación de voladura de rocas</li>
@@ -709,7 +721,7 @@
 
             <div class="service-card">
                 <div class="service-img"><img src="images/movimiento-tierras.jpg" alt="Movimiento de tierras"
-                        loading="lazy" /></div>
+                        loading="lazy" decoding="async" /></div>
                 <h3 class="service-name">Movimiento de tierras</h3>
                 <ul class="svc-list">
                     <li>Remoción de roca y suelos</li>
@@ -719,7 +731,7 @@
 
             <div class="service-card">
                 <div class="service-img"><img src="images/alquiler-equipos.avif" alt="Alquiler de equipos"
-                        loading="lazy" /></div>
+                        loading="lazy" decoding="async" /></div>
                 <h3 class="service-name">Alquiler de equipos</h3>
                 <ul class="svc-list">
                     <li>Alquiler de perforadoras</li>
@@ -732,7 +744,7 @@
 
             <div class="service-card">
                 <div class="service-img"><img src="images/capacitacion.jpg" alt="Capacitación y Entrenamiento"
-                        loading="lazy" /></div>
+                        loading="lazy" decoding="async" /></div>
                 <h3 class="service-name">Capacitación y Entrenamiento</h3>
                 <ul class="svc-list">
                     <li>Capacitación de operadores</li>
@@ -741,7 +753,8 @@
             </div>
 
             <div class="service-card">
-                <div class="service-img"><img src="images/consultoria.jpg" alt="Consultoría" loading="lazy" /></div>
+                <div class="service-img"><img src="images/consultoria.jpg" alt="Consultoría" loading="lazy"
+                        decoding="async" /></div>
                 <h3 class="service-name">Consultoría</h3>
                 <ul class="svc-list">
                     <li>Perforación y voladura de rocas</li>
@@ -758,7 +771,7 @@
     <!-- ═══ ABOUT ═══ -->
     <section class="about">
         <div class="about-img reveal">
-            <img src="images/1568848.jpeg" alt="Más sobre Sabaoth Elyah" loading="lazy" />
+            <img src="images/1568848.jpeg" alt="Más sobre Sabaoth Elyah" loading="lazy" decoding="async" />
         </div>
         <div class="about-text reveal" style="transition-delay:0.15s">
             <h2 class="about-title">Más sobre<br>nuestra empresa</h2>
@@ -838,7 +851,12 @@
 
             /* Start */
             progress.classList.add('running');
-            timer = setInterval(() => goTo(current + 1), INTERVAL);
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    progress.classList.add('running');
+                    timer = setInterval(() => goTo(current + 1), INTERVAL);
+                }, 300);
+            });
         })();
 
         /* ═══════════════════════════
