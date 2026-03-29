@@ -1,594 +1,863 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sabaoth Elyah</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    html, body {
-        overflow-x: hidden;
-        overflow-y: auto; /* ensure vertical scroll always allowed */
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sabaoth Elyah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --white: #ffffff;
-      --off-white: rgba(255,255,255,0.82);
-      --black: #0a0a0a;
-      --btn-bg: #f5f5f5;
-      --btn-text: #111111;
-      --bg: #e8e4dc;
-      --dark: #0f0f0f;
-      --navy: #1a2744;
-      --muted: #444;
-    }
+        html,
+        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* ensure vertical scroll always allowed */
+        }
 
-    html, body {
-      font-family: 'Sora', sans-serif;
-      background: var(--black);
-      color: var(--white);
-      overflow-x: hidden;
-    }
+        :root {
+            --white: #ffffff;
+            --off-white: rgba(255, 255, 255, 0.82);
+            --black: #0a0a0a;
+            --btn-bg: #f5f5f5;
+            --btn-text: #111111;
+            --bg: #e8e4dc;
+            --dark: #0f0f0f;
+            --navy: #1a2744;
+            --muted: #444;
+        }
 
-    /* ══════════════════════════════
+        html,
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════
        HERO + CAROUSEL
     ══════════════════════════════ */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-    /* Slides */
-    .carousel {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
+        /* Slides */
+        .carousel {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
 
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 1.4s ease;
-    }
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.4s ease;
+        }
 
-    .carousel-slide.active { opacity: 1; }
+        .carousel-slide.active {
+            opacity: 1;
+        }
 
-    .carousel-slide img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      /* subtle slow zoom — restarts each time slide becomes active */
-      animation: kenBurns 9s ease-in-out forwards;
-    }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            /* subtle slow zoom — restarts each time slide becomes active */
+            animation: kenBurns 9s ease-in-out forwards;
+        }
 
-    @keyframes kenBurns {
-      from { transform: scale(1.00); }
-      to   { transform: scale(1.07); }
-    }
+        @keyframes kenBurns {
+            from {
+                transform: scale(1.00);
+            }
 
-    /* Dark gradient overlay — keeps text legible without being heavy */
-    .carousel-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(0,0,0,0.48) 0%,
-          rgba(0,0,0,0.28) 45%,
-          rgba(0,0,0,0.60) 100%);
-      z-index: 1;
-    }
+            to {
+                transform: scale(1.07);
+            }
+        }
 
-    /* Progress bar at bottom */
-    .carousel-progress {
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 2px;
-      background: rgba(255,255,255,0.5);
-      z-index: 10;
-      width: 0%;
-      transition: none;
-    }
+        /* Dark gradient overlay — keeps text legible without being heavy */
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.48) 0%,
+                    rgba(0, 0, 0, 0.28) 45%,
+                    rgba(0, 0, 0, 0.60) 100%);
+            z-index: 1;
+        }
 
-    .carousel-progress.running {
-      width: 100%;
-      transition: width 5s linear;
-    }
+        /* Progress bar at bottom */
+        .carousel-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: 10;
+            width: 0%;
+            transition: none;
+        }
 
-    /* Dots */
-    .carousel-dots {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
+        .carousel-progress.running {
+            width: 100%;
+            transition: width 5s linear;
+        }
 
-    .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      border: none; cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      padding: 0;
-    }
+        /* Dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
 
-    .dot.active { background: #fff; transform: scale(1.3); }
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            padding: 0;
+        }
 
-    /* ── Nav ── */
-    nav {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 48px;
-      animation: fadeDown 0.8s ease both;
-    }
+        .dot.active {
+            background: #fff;
+            transform: scale(1.3);
+        }
 
-    .brand {
-      font-size: 1.1rem; font-weight: 400;
-      letter-spacing: 0.01em;
-      color: var(--white); text-decoration: none;
-    }
+        /* ── Nav ── */
+        nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 28px 48px;
+            animation: fadeDown 0.8s ease both;
+        }
 
-    .nav-links { display: flex; gap: 40px; list-style: none; }
+        .brand {
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            color: var(--white);
+            text-decoration: none;
+        }
 
-    .nav-links a {
-      color: var(--white); text-decoration: none;
-      font-size: 0.95rem; font-weight: 300;
-      letter-spacing: 0.02em; opacity: 0.9;
-      transition: opacity 0.2s;
-    }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
 
-    .nav-links a:hover { opacity: 1; }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
 
-    /* ── Hero text ── */
-    .hero-content {
-      position: relative; z-index: 10;
-      flex: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 0 24px 100px;
-    }
+        .nav-links a:hover {
+            opacity: 1;
+        }
 
-    .hero-title {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700; line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px; color: var(--white);
-      opacity: 0; transform: translateY(22px);
-      animation: fadeUp 0.9s ease 0.3s forwards;
-    }
+        /* ── Hero text ── */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 24px 100px;
+        }
 
-    .hero-subtitle {
-      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
-      font-weight: 300; color: var(--off-white);
-      max-width: 440px; line-height: 1.65;
-      margin-bottom: 44px;
-      opacity: 0; transform: translateY(16px);
-      animation: fadeUp 0.9s ease 0.55s forwards;
-    }
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(22px);
+            animation: fadeUp 0.9s ease 0.3s forwards;
+        }
 
-    .btn-cta {
-      display: inline-block;
-      padding: 18px 52px;
-      background: var(--btn-bg); color: var(--btn-text);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.8rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      text-decoration: none; border-radius: 50px; border: none;
-      cursor: pointer; box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.9s ease 0.75s forwards;
-      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-    }
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+            font-weight: 300;
+            color: var(--off-white);
+            max-width: 440px;
+            line-height: 1.65;
+            margin-bottom: 44px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 0.9s ease 0.55s forwards;
+        }
 
-    .btn-cta:hover {
-      background: #fff; transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-    }
+        .btn-cta {
+            display: inline-block;
+            padding: 18px 52px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            font-family: 'Sora', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 0.9s ease 0.75s forwards;
+            transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+        }
 
-    /* ── Keyframes ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+        .btn-cta:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+        /* ── Keyframes ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
 
-    /* ══════════════════════════════
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ══════════════════════════════
        SCROLL REVEAL
     ══════════════════════════════ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
 
-    .reveal.visible { opacity: 1; transform: none; }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
 
-    /* Staggered grid — each child animates with slight delay */
-    .reveal-stagger > * {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+        /* Staggered grid — each child animates with slight delay */
+        .reveal-stagger>* {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
 
-    .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.00s; }
-    .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.10s; }
-    .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.20s; }
-    .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.30s; }
-    .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.40s; }
-    .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.50s; }
+        .reveal-stagger.visible>*:nth-child(1) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.00s;
+        }
 
-    /* ══════════════════════════════
+        .reveal-stagger.visible>*:nth-child(2) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.10s;
+        }
+
+        .reveal-stagger.visible>*:nth-child(3) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.20s;
+        }
+
+        .reveal-stagger.visible>*:nth-child(4) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.30s;
+        }
+
+        .reveal-stagger.visible>*:nth-child(5) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.40s;
+        }
+
+        .reveal-stagger.visible>*:nth-child(6) {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.50s;
+        }
+
+        /* ══════════════════════════════
        SERVICES
     ══════════════════════════════ */
-    .services {
-      background: var(--bg);
-      color: #111;
-      padding: 72px 52px 80px;
-    }
+        .services {
+            background: var(--bg);
+            color: #111;
+            padding: 72px 52px 80px;
+        }
 
-    .services-title {
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      font-weight: 700; letter-spacing: -0.02em;
-      color: var(--dark); margin-bottom: 44px; line-height: 1.05;
-    }
+        .services-title {
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin-bottom: 44px;
+            line-height: 1.05;
+        }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
 
-    .service-card { display: flex; flex-direction: column; }
+        .service-card {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .service-img {
-      width: 100%; aspect-ratio: 3 / 4;
-      border-radius: 4px; margin-bottom: 18px;
-      overflow: hidden; background: #c8c8c8;
-    }
+        .service-img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            background: #c8c8c8;
+        }
 
-    .service-img img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      display: block;
-      transition: transform 0.55s ease;
-    }
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.55s ease;
+        }
 
-    .service-card:hover .service-img img { transform: scale(1.04); }
+        .service-card:hover .service-img img {
+            transform: scale(1.04);
+        }
 
-    .service-name {
-      font-size: 1.15rem; font-weight: 400;
-      color: var(--dark); margin-bottom: 10px;
-    }
+        .service-name {
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
 
-    .svc-list { list-style: none; padding: 0; margin: 0; flex: 1; }
+        .svc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
 
-    .svc-list li {
-      font-size: 0.82rem; font-weight: 300;
-      color: var(--muted); line-height: 1.7;
-      padding-left: 14px; position: relative;
-    }
+        .svc-list li {
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+            padding-left: 14px;
+            position: relative;
+        }
 
-    .svc-list li::before { content: '–'; position: absolute; left: 0; color: #999; }
+        .svc-list li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
 
-    /* ══════════════════════════════
+        /* ══════════════════════════════
        ABOUT
     ══════════════════════════════ */
-    .about {
-      background: var(--bg);
-      padding: 60px 52px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
+        .about {
+            background: var(--bg);
+            padding: 60px 52px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
 
-    .about-img {
-      width: 100%; aspect-ratio: 3 / 4;
-      border-radius: 6px; overflow: hidden;
-      background: #c8c8c8;
-    }
+        .about-img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #c8c8c8;
+        }
 
-    .about-img img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      transition: transform 0.6s ease;
-    }
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
 
-    .about-img:hover img { transform: scale(1.03); }
+        .about-img:hover img {
+            transform: scale(1.03);
+        }
 
-    .about-text { display: flex; flex-direction: column; padding-left: 20px; }
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+        }
 
-    .about-title {
-      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-      font-weight: 400; letter-spacing: -0.02em;
-      color: var(--dark); line-height: 1.1; margin-bottom: 28px;
-    }
+        .about-title {
+            font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+            line-height: 1.1;
+            margin-bottom: 28px;
+        }
 
-    .about-desc {
-      font-size: 0.9rem; font-weight: 300;
-      color: #333; line-height: 1.7;
-      max-width: 440px; margin-bottom: 52px;
-    }
+        .about-desc {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #333;
+            line-height: 1.7;
+            max-width: 440px;
+            margin-bottom: 52px;
+        }
 
-    .btn-about {
-      display: inline-block; padding: 20px 60px;
-      background: var(--navy); color: #fff;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      text-decoration: none; border-radius: 50px;
-      border: none; cursor: pointer; align-self: flex-start;
-      transition: background 0.25s, transform 0.2s;
-    }
+        .btn-about {
+            display: inline-block;
+            padding: 20px 60px;
+            background: var(--navy);
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: background 0.25s, transform 0.2s;
+        }
 
-    .btn-about:hover { background: #243360; transform: translateY(-1px); }
+        .btn-about:hover {
+            background: #243360;
+            transform: translateY(-1px);
+        }
 
-    /* ══════════════════════════════
+        /* ══════════════════════════════
        FOOTER
     ══════════════════════════════ */
-    footer {
-      background: var(--bg);
-      padding: 60px 52px 70px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      align-items: start;
-      border-top: 1px solid rgba(0,0,0,0.08);
-    }
+        footer {
+            background: var(--bg);
+            padding: 60px 52px 70px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            align-items: start;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
 
-    .footer-brand { grid-column: 1 / 3; }
+        .footer-brand {
+            grid-column: 1 / 3;
+        }
 
-    .footer-title {
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 400; letter-spacing: -0.02em;
-      color: var(--dark); margin-bottom: 18px; line-height: 1.1;
-    }
+        .footer-title {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin-bottom: 18px;
+            line-height: 1.1;
+        }
 
-    .footer-col h4 {
-      font-size: 1rem; font-weight: 400;
-      color: var(--dark); margin-bottom: 20px;
-    }
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
 
-    .footer-col p,
-    .footer-col a {
-      font-size: 0.85rem; font-weight: 300;
-      color: #333; line-height: 1.8;
-      text-decoration: none; display: block;
-    }
-  </style>
+        .footer-col p,
+        .footer-col a {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #333;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* =========================
+   RESPONSIVE FIXES ONLY
+   (DOES NOT CHANGE DESIGN)
+========================= */
+
+        /* Tablets */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            /* NAV */
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            /* HERO */
+            .hero {
+                height: auto;
+                min-height: 90vh;
+            }
+
+            .hero-content {
+                padding: 0 20px 60px;
+            }
+
+            .hero-title {
+                font-size: 2.4rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .btn-cta {
+                padding: 14px 28px;
+            }
+
+            /* SERVICES */
+            .services {
+                padding: 50px 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .service-img {
+                aspect-ratio: 16 / 9;
+            }
+
+            /* ABOUT */
+            .about {
+                grid-template-columns: 1fr;
+                padding: 50px 20px;
+                gap: 30px;
+            }
+
+            .about-img {
+                aspect-ratio: 16 / 9;
+            }
+
+            .about-text {
+                padding-left: 0;
+            }
+
+            .about-desc {
+                max-width: 100%;
+            }
+
+            /* FOOTER */
+            footer {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+                gap: 30px;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero">
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
 
-  <!-- Carousel
+        <!-- Carousel
        Place hero images at: images/hero-1.jpg  hero-2.jpg  hero-3.jpg
        Add more <div class="carousel-slide"> as needed — JS adapts automatically -->
-  <div class="carousel" id="carousel">
-    <div class="carousel-slide active">
-      <img src="images/hero-1.jpg" alt="Perforación de roca"/>
-    </div>
-    <div class="carousel-slide">
-      <img src="images/hero-2.jpg" alt="Voladura de roca" loading="lazy"/>
-    </div>
-    <div class="carousel-slide">
-      <img src="images/hero-3.jpg" alt="Equipos mineros" loading="lazy"/>
-    </div>
-  </div>
+        <div class="carousel" id="carousel">
+            <div class="carousel-slide active">
+                <img src="images/hero-1.jpg" alt="Perforación de roca" />
+            </div>
+            <div class="carousel-slide">
+                <img src="images/hero-2.jpg" alt="Voladura de roca" loading="lazy" />
+            </div>
+            <div class="carousel-slide">
+                <img src="images/hero-3.jpg" alt="Equipos mineros" loading="lazy" />
+            </div>
+        </div>
 
-  <div class="carousel-overlay"></div>
-  <div class="carousel-progress" id="carouselProgress"></div>
+        <div class="carousel-overlay"></div>
+        <div class="carousel-progress" id="carouselProgress"></div>
 
-  <nav>
-    <a class="brand" href="#">Sabaoth Elyah</a>
-    <ul class="nav-links">
-      <li><a href="index.php/services.html">Servicios</a></li>
-      <li><a href="index.php/aboutUs.html">Acerca de</a></li>
-      <li><a href="https://api.whatsapp.com/send/?phone=51995995799&text&type=phone_number&app_absent=0" target="_blank">Contacto</a></li>
-    </ul>
-  </nav>
+        <nav>
+            <a class="brand" href="#">Sabaoth Elyah</a>
+            <ul class="nav-links">
+                <li><a href="index.php/services.html">Servicios</a></li>
+                <li><a href="index.php/aboutUs.html">Acerca de</a></li>
+                <li><a href="https://api.whatsapp.com/send/?phone=51995995799&text&type=phone_number&app_absent=0"
+                        target="_blank">Contacto</a></li>
+            </ul>
+        </nav>
 
-  <div class="hero-content">
-    <h1 class="hero-title">Sabaoth Elyah</h1>
-    <p class="hero-subtitle">Especialistas en servicios de perforación y voladura de roca en el Perú.</p>
-    <a class="btn-cta" href="https://api.whatsapp.com/send/?phone=51995995799&text&type=phone_number&app_absent=0">Contáctanos</a>
-  </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Sabaoth Elyah</h1>
+            <p class="hero-subtitle">Especialistas en servicios de perforación y voladura de roca en el Perú.</p>
+            <a class="btn-cta"
+                href="https://api.whatsapp.com/send/?phone=51995995799&text&type=phone_number&app_absent=0">Contáctanos</a>
+        </div>
 
-  <div class="carousel-dots" id="carouselDots"></div>
-</section>
+        <div class="carousel-dots" id="carouselDots"></div>
+    </section>
 
-<!-- ═══ SERVICES ═══ -->
-<section class="services">
-  <h2 class="services-title reveal">Nuestros servicios</h2>
-  <div class="services-grid reveal-stagger">
+    <!-- ═══ SERVICES ═══ -->
+    <section class="services">
+        <h2 class="services-title reveal">Nuestros servicios</h2>
+        <div class="services-grid reveal-stagger">
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/perforacion.jpg" alt="Perforación" loading="lazy"/></div>
-      <h3 class="service-name">Perforación</h3>
-      <ul class="svc-list">
-        <li>Perforación de roca con equipos neumáticos e hidráulicos para operaciones mineras superficiales</li>
-        <li>Martillo en cabeza (TH)</li>
-        <li>Martillo en fondo (DTH)</li>
-        <li>Rotativo (tricono)</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/perforacion.jpg" alt="Perforación" loading="lazy" /></div>
+                <h3 class="service-name">Perforación</h3>
+                <ul class="svc-list">
+                    <li>Perforación de roca con equipos neumáticos e hidráulicos para operaciones mineras superficiales
+                    </li>
+                    <li>Martillo en cabeza (TH)</li>
+                    <li>Martillo en fondo (DTH)</li>
+                    <li>Rotativo (tricono)</li>
+                </ul>
+            </div>
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/voladura.jpg" alt="Voladura" loading="lazy"/></div>
-      <h3 class="service-name">Voladura</h3>
-      <ul class="svc-list">
-        <li>Diseño, planeamiento, ejecución y evaluación de voladura de rocas</li>
-        <li>Operaciones mineras superficiales y subterráneas</li>
-        <li>Canteras</li>
-        <li>Carreteras, accesos y zanjas</li>
-        <li>Voladura controlada cerca a estructuras</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/voladura.jpg" alt="Voladura" loading="lazy" /></div>
+                <h3 class="service-name">Voladura</h3>
+                <ul class="svc-list">
+                    <li>Diseño, planeamiento, ejecución y evaluación de voladura de rocas</li>
+                    <li>Operaciones mineras superficiales y subterráneas</li>
+                    <li>Canteras</li>
+                    <li>Carreteras, accesos y zanjas</li>
+                    <li>Voladura controlada cerca a estructuras</li>
+                </ul>
+            </div>
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/movimiento-tierras.jpg" alt="Movimiento de tierras" loading="lazy"/></div>
-      <h3 class="service-name">Movimiento de tierras</h3>
-      <ul class="svc-list">
-        <li>Remoción de roca y suelos</li>
-        <li>Preparación de terrenos para la construcción de estructuras</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/movimiento-tierras.jpg" alt="Movimiento de tierras"
+                        loading="lazy" /></div>
+                <h3 class="service-name">Movimiento de tierras</h3>
+                <ul class="svc-list">
+                    <li>Remoción de roca y suelos</li>
+                    <li>Preparación de terrenos para la construcción de estructuras</li>
+                </ul>
+            </div>
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/alquiler-equipos.avif" alt="Alquiler de equipos" loading="lazy"/></div>
-      <h3 class="service-name">Alquiler de equipos</h3>
-      <ul class="svc-list">
-        <li>Alquiler de perforadoras</li>
-        <li>Alquiler de torres de iluminación</li>
-        <li>Alquiler de martillos hidráulicos</li>
-        <li>Gestión de mantenimiento de equipos mineros</li>
-        <li>Supervisión y operación de flota de equipos</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/alquiler-equipos.avif" alt="Alquiler de equipos"
+                        loading="lazy" /></div>
+                <h3 class="service-name">Alquiler de equipos</h3>
+                <ul class="svc-list">
+                    <li>Alquiler de perforadoras</li>
+                    <li>Alquiler de torres de iluminación</li>
+                    <li>Alquiler de martillos hidráulicos</li>
+                    <li>Gestión de mantenimiento de equipos mineros</li>
+                    <li>Supervisión y operación de flota de equipos</li>
+                </ul>
+            </div>
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/capacitacion.jpg" alt="Capacitación y Entrenamiento" loading="lazy"/></div>
-      <h3 class="service-name">Capacitación y Entrenamiento</h3>
-      <ul class="svc-list">
-        <li>Capacitación de operadores</li>
-        <li>Capacitación en perforación y voladura</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/capacitacion.jpg" alt="Capacitación y Entrenamiento"
+                        loading="lazy" /></div>
+                <h3 class="service-name">Capacitación y Entrenamiento</h3>
+                <ul class="svc-list">
+                    <li>Capacitación de operadores</li>
+                    <li>Capacitación en perforación y voladura</li>
+                </ul>
+            </div>
 
-    <div class="service-card">
-      <div class="service-img"><img src="images/consultoria.jpg" alt="Consultoría" loading="lazy"/></div>
-      <h3 class="service-name">Consultoría</h3>
-      <ul class="svc-list">
-        <li>Perforación y voladura de rocas</li>
-        <li>Instrumentación</li>
-        <li>Implementación de tecnología de perforación y voladura</li>
-        <li>Asesoramiento en software de voladura</li>
-        <li>Almacenamiento, adquisición y uso de EMR</li>
-      </ul>
-    </div>
+            <div class="service-card">
+                <div class="service-img"><img src="images/consultoria.jpg" alt="Consultoría" loading="lazy" /></div>
+                <h3 class="service-name">Consultoría</h3>
+                <ul class="svc-list">
+                    <li>Perforación y voladura de rocas</li>
+                    <li>Instrumentación</li>
+                    <li>Implementación de tecnología de perforación y voladura</li>
+                    <li>Asesoramiento en software de voladura</li>
+                    <li>Almacenamiento, adquisición y uso de EMR</li>
+                </ul>
+            </div>
 
-  </div>
-</section>
+        </div>
+    </section>
 
-<!-- ═══ ABOUT ═══ -->
-<section class="about">
-  <div class="about-img reveal">
-    <img src="images/1568848.jpeg" alt="Más sobre Sabaoth Elyah" loading="lazy"/>
-  </div>
-  <div class="about-text reveal" style="transition-delay:0.15s">
-    <h2 class="about-title">Más sobre<br>nuestra empresa</h2>
-    <p class="about-desc">SABAOTH es una empresa especializada en servicios de perforación y voladura de roca en el Perú. Brindamos servicios al sector minero y construcción, y contamos con equipos propios de marca Sandvik, Jun Jin, Epiroc y SooSan, para diámetros de perforación de 2.5 – 5.5 pulg.</p>
-    <a class="btn-about" href="index.php/aboutUs.html">Leer más</a>
-  </div>
-</section>
+    <!-- ═══ ABOUT ═══ -->
+    <section class="about">
+        <div class="about-img reveal">
+            <img src="images/1568848.jpeg" alt="Más sobre Sabaoth Elyah" loading="lazy" />
+        </div>
+        <div class="about-text reveal" style="transition-delay:0.15s">
+            <h2 class="about-title">Más sobre<br>nuestra empresa</h2>
+            <p class="about-desc">SABAOTH es una empresa especializada en servicios de perforación y voladura de roca en
+                el Perú. Brindamos servicios al sector minero y construcción, y contamos con equipos propios de marca
+                Sandvik, Jun Jin, Epiroc y SooSan, para diámetros de perforación de 2.5 – 5.5 pulg.</p>
+            <a class="btn-about" href="index.php/aboutUs.html">Leer más</a>
+        </div>
+    </section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer class="reveal">
-  <div class="footer-brand">
-    <h2 class="footer-title">Sabaoth Elyah</h2>
-  </div>
-  <div class="footer-col">
-    <h4>Ubicación</h4>
-    <p>Av. Los Nogales, 251<br>El Agustino, Lima</p>
-  </div>
-  <div class="footer-col">
-    <h4>Contacto</h4>
-    <a href="mailto:sabaothelyah@hotmail.com">sabaothelyah@hotmail.com</a>
-    <a href="tel:+51995995799">(+51) 995 995 799</a>
-  </div>
-</footer>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="reveal">
+        <div class="footer-brand">
+            <h2 class="footer-title">Sabaoth Elyah</h2>
+        </div>
+        <div class="footer-col">
+            <h4>Ubicación</h4>
+            <p>Av. Los Nogales, 251<br>El Agustino, Lima</p>
+        </div>
+        <div class="footer-col">
+            <h4>Contacto</h4>
+            <a href="mailto:sabaothelyah@hotmail.com">sabaothelyah@hotmail.com</a>
+            <a href="tel:+51995995799">(+51) 995 995 799</a>
+        </div>
+    </footer>
 
-<script>
-/* ═══════════════════════════
-   CAROUSEL
-═══════════════════════════ */
-(function () {
-  const slides    = document.querySelectorAll('.carousel-slide');
-  const dotsWrap  = document.getElementById('carouselDots');
-  const progress  = document.getElementById('carouselProgress');
-  const INTERVAL  = 5000;
-  let current = 0, timer, paused = false;
+    <script>
+        /* ═══════════════════════════
+           CAROUSEL
+        ═══════════════════════════ */
+        (function () {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dotsWrap = document.getElementById('carouselDots');
+            const progress = document.getElementById('carouselProgress');
+            const INTERVAL = 5000;
+            let current = 0, timer, paused = false;
 
-  /* Build dots */
-  slides.forEach((_, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'dot' + (i === 0 ? ' active' : '');
-    btn.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
-    btn.addEventListener('click', () => { goTo(i); resetTimer(); });
-    dotsWrap.appendChild(btn);
-  });
+            /* Build dots */
+            slides.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'dot' + (i === 0 ? ' active' : '');
+                btn.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
+                btn.addEventListener('click', () => { goTo(i); resetTimer(); });
+                dotsWrap.appendChild(btn);
+            });
 
-  const dots = dotsWrap.querySelectorAll('.dot');
+            const dots = dotsWrap.querySelectorAll('.dot');
 
-  function goTo(idx) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = (idx + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
+            function goTo(idx) {
+                slides[current].classList.remove('active');
+                dots[current].classList.remove('active');
+                current = (idx + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                dots[current].classList.add('active');
 
-    /* Restart Ken-Burns on entering slide */
-    const img = slides[current].querySelector('img');
-    img.style.animation = 'none';
-    void img.offsetWidth;
-    img.style.animation = '';
+                /* Restart Ken-Burns on entering slide */
+                const img = slides[current].querySelector('img');
+                img.style.animation = 'none';
+                void img.offsetWidth;
+                img.style.animation = '';
 
-    /* Restart progress bar */
-    progress.classList.remove('running');
-    void progress.offsetWidth;
-    progress.classList.add('running');
-  }
+                /* Restart progress bar */
+                progress.classList.remove('running');
+                void progress.offsetWidth;
+                progress.classList.add('running');
+            }
 
-  function resetTimer() {
-    clearInterval(timer);
-    if (!paused) timer = setInterval(() => goTo(current + 1), INTERVAL);
-  }
+            function resetTimer() {
+                clearInterval(timer);
+                if (!paused) timer = setInterval(() => goTo(current + 1), INTERVAL);
+            }
 
-  /* Pause on hover */
-  const carousel = document.getElementById('carousel');
-  carousel.addEventListener('mouseenter', () => { paused = true; clearInterval(timer); progress.style.animationPlayState = 'paused'; });
-  carousel.addEventListener('mouseleave', () => { paused = false; resetTimer(); });
+            /* Pause on hover */
+            const carousel = document.getElementById('carousel');
+            carousel.addEventListener('mouseenter', () => { paused = true; clearInterval(timer); progress.style.animationPlayState = 'paused'; });
+            carousel.addEventListener('mouseleave', () => { paused = false; resetTimer(); });
 
-  /* Start */
-  progress.classList.add('running');
-  timer = setInterval(() => goTo(current + 1), INTERVAL);
-})();
+            /* Start */
+            progress.classList.add('running');
+            timer = setInterval(() => goTo(current + 1), INTERVAL);
+        })();
 
-/* ═══════════════════════════
-   SCROLL REVEAL
-═══════════════════════════ */
-(function () {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.10 });
+        /* ═══════════════════════════
+           SCROLL REVEAL
+        ═══════════════════════════ */
+        (function () {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.10 });
 
-  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
-})();
-</script>
+            document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+        })();
+    </script>
 
 </body>
+
 </html>
