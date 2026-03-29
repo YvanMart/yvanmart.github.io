@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios — Sabaoth Elyah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #e8e4dc;
+      --dark: #0f0f0f;
+      --navy: #1a2744;
+      --text: #1a1a1a;
+      --muted: #444;
+    }
+
+    html, body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 26px 52px;
+      background: var(--bg);
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 300;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-links a.active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      opacity: 1;
+    }
+
+    /* ── HERO BANNER ── */
+    .services-banner {
+      margin: 0 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 460px;
+      position: relative;
+      background: #c8c0b0;
+    }
+
+    .services-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ── INTRO SECTION ── */
+    .services-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      padding: 60px 52px 72px;
+      align-items: start;
+    }
+
+    .intro-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+      line-height: 1.0;
+    }
+
+    .intro-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 8px;
+    }
+
+    .intro-text {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── SERVICE CARDS ── */
+    .services-cards {
+      padding: 0 52px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .svc-card:hover .svc-img img { transform: scale(1.04); }
+
+    .svc-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Image container — accepts real <img> or CSS fallback */
+    .svc-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 4px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      position: relative;
+      background: #c8c0b0; /* fallback if image missing */
+    }
+
+    .svc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.55s ease;
+    }
+
+    /* CSS fallbacks (shown when no <img> inside) */
+    .svc-img-1 { background: linear-gradient(135deg, #d9d0c2 0%, #c9bfae 50%, #b8ad9e 100%); }
+    .svc-img-2 { background: linear-gradient(120deg, #cfc5b4 0%, #d6ccbc 40%, #bfb49f 100%); }
+    .svc-img-3 { background: linear-gradient(110deg, #d0c9bc 0%, #c8c0b1 50%, #b5ad9e 100%); }
+    .svc-img-4 { background: linear-gradient(125deg, #ccc4b4 0%, #bdb5a5 50%, #ada598 100%); }
+    .svc-img-5 { background: linear-gradient(115deg, #d4ccbe 0%, #c4bcae 50%, #b4aca0 100%); }
+    .svc-img-6 { background: linear-gradient(130deg, #cec6b8 0%, #beb6a8 50%, #aea69a 100%); }
+
+    /* Card text */
+    .svc-name {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    /* Description: plain paragraph */
+    .svc-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.65;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    /* Description: list style (when items start with -) */
+    .svc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      flex: 1;
+    }
+
+    .svc-list li {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: #444;
+      line-height: 1.7;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .svc-list li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: #888;
+    }
+
+    
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      padding: 60px 52px 70px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: start;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .footer-brand { grid-column: 1 / 3; }
+
+    .footer-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      margin-bottom: 18px;
+      line-height: 1.1;
+    }
+
+    .footer-col h4 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .footer-col p,
+    .footer-col a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: #333;
+      line-height: 1.8;
+      text-decoration: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<!-- index.html sits one level above the index.php folder -->
+<nav>
+  <a class="brand" href="../index.html">Sabaoth Elyah</a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="active">Servicios</a></li>
+    <li><a href="aboutUs.html">Acerca de</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO BANNER
+     Replace src with your actual image path, e.g. "../assets/banner.jpg" -->
+<div class="services-banner">
+  <img src="../images/service-artguru.png" alt="Servicios Sabaoth Elyah"
+       onerror="this.style.display='none'"/>
+</div>
+
+<!-- INTRO -->
+<section class="services-intro">
+  <h1 class="intro-title">Nuestros<br>servicios</h1>
+  <div class="intro-right">
+    <p class="intro-text">
+      SABAOTH es una empresa especializada en servicios de perforación y voladura de roca en el Perú. Brindamos servicios al sector minero y construcción, y contamos con equipos propios de marca Sandvik, Jun Jin, Epiroc y SooSan, para diámetros de perforación de 2.5 – 5.5 pulg.
+    </p>
+  </div>
+</section>
+
+<!-- SERVICE CARDS -->
+<div class="services-cards">
+
+  <!-- Card 1: Perforación -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-1">
+      <!-- Replace src with your image, e.g. "../assets/perforacion.jpg" -->
+      <img src="../images/perforacion.jpg" alt="Perforación"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Perforación</h3>
+    <ul class="svc-list">
+      <li>Perforación de roca con equipos neumáticos e hidráulicos para operaciones mineras superficiales</li>
+      <li>Martillo en cabeza (TH)</li>
+      <li>Martillo en fondo (DTH)</li>
+      <li>Rotativo (tricono)</li>
+    </ul>
+  </div>
+
+  <!-- Card 2: Voladura -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-2">
+      <img src="../images/voladura.jpg" alt="Voladura"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Voladura</h3>
+    <ul class="svc-list">
+      <li>Diseño, planeamiento, ejecución y evaluación de voladura de rocas</li>
+      <li>Operaciones mineras superficiales y subterráneas</li>
+      <li>Canteras</li>
+      <li>Carreteras, accesos y zanjas</li>
+      <li>Voladura controlada cerca a estructuras</li>
+    </ul>
+  </div>
+
+  <!-- Card 3: Movimiento de tierras -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-3">
+      <img src="../images/movimiento-tierras.jpg" alt="Movimiento de tierras"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Movimiento de tierras</h3>
+    <ul class="svc-list">
+      <li>Remoción de roca y suelos</li>
+      <li>Preparación de terrenos para la construcción de estructuras</li>
+    </ul>
+  </div>
+
+  <!-- Card 4: Alquiler de equipos -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-4">
+      <img src="../images/alquiler-equipos.avif" alt="Alquiler de equipos"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Alquiler de equipos</h3>
+    <ul class="svc-list">
+      <li>Alquiler de perforadoras</li>
+      <li>Alquiler de torres de iluminación</li>
+      <li>Alquiler de martillos hidráulicos</li>
+      <li>Gestión de mantenimiento de equipos mineros</li>
+      <li>Supervisión y operación de flota de equipos</li>
+    </ul>
+  </div>
+
+  <!-- Card 5: Capacitación -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-5">
+      <img src="../images/capacitacion.jpg" alt="Capacitación y Entrenamiento"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Capacitación y Entrenamiento</h3>
+    <ul class="svc-list">
+      <li>Capacitación de operadores</li>
+      <li>Capacitación en perforación y voladura</li>
+    </ul>
+  </div>
+
+  <!-- Card 6: Consultoría -->
+  <div class="svc-card">
+    <div class="svc-img svc-img-6">
+      <img src="../images/consultoria.jpg" alt="Consultoría"
+           onerror="this.style.display='none'"/>
+    </div>
+    <h3 class="svc-name">Consultoría</h3>
+    <ul class="svc-list">
+      <li>Perforación y voladura de rocas</li>
+      <li>Instrumentación</li>
+      <li>Implementación de tecnología de perforación y voladura</li>
+      <li>Asesoramiento en software de voladura</li>
+      <li>Almacenamiento, adquisición y uso de EMR</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <h2 class="footer-title">Sabaoth Elyah</h2>
+  </div>
+  <div class="footer-col">
+    <h4>Ubicación</h4>
+    <p>Av. Los Nogales, 251<br>El Agustino, Lima</p>
+  </div>
+  <div class="footer-col">
+    <h4>Contacto</h4>
+    <a href="mailto:sabaothelyah@hotmail.com">sabaothelyah@hotmail.com</a>
+    <a href="tel:+51995995799">(+51) 995 995 799</a>
+  </div>
+</footer>
+
+</body>
+</html>
