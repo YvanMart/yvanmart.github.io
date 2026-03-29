@@ -1,261 +1,356 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acerca de — Sabaoth Elyah</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acerca de — Sabaoth Elyah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --bg: #e8e4dc;
-      --dark: #0f0f0f;
-      --navy: #1a2744;
-      --text: #1a1a1a;
-      --muted: #444;
-    }
+        :root {
+            --bg: #e8e4dc;
+            --dark: #0f0f0f;
+            --navy: #1a2744;
+            --text: #1a1a1a;
+            --muted: #444;
+        }
 
-    html, body {
-      font-family: 'Sora', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+        html,
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
 
-    /* ── NAV ── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 26px 52px;
-      background: var(--bg);
-    }
+        /* ── NAV ── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 52px;
+            background: var(--bg);
+        }
 
-    .brand {
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: var(--dark);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-    }
+        .brand {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--dark);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
 
-    .nav-links a {
-      color: var(--dark);
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 300;
-      letter-spacing: 0.01em;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-    }
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
 
-    .nav-links a:hover { opacity: 1; }
+        .nav-links a:hover {
+            opacity: 1;
+        }
 
-    .nav-links a.active {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      opacity: 1;
-    }
+        .nav-links a.active {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            opacity: 1;
+        }
 
-    /* ── HERO ABOUT ── */
-    .about-hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: calc(100vh - 80px);
-      align-items: start;
-    }
+        /* ── HERO ABOUT ── */
+        .about-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 80px);
+            align-items: start;
+        }
 
-    /* Left: text column */
-    .about-left {
-      padding: 64px 52px 80px;
-      display: flex;
-      flex-direction: column;
-    }
+        /* Left: text column */
+        .about-left {
+            padding: 64px 52px 80px;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .about-hero-title {
-      font-size: clamp(2.8rem, 5.5vw, 4.4rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--dark);
-      line-height: 1.05;
-      margin-bottom: 36px;
-    }
+        .about-hero-title {
+            font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--dark);
+            line-height: 1.05;
+            margin-bottom: 36px;
+        }
 
-    /* Plain intro paragraph */
-    .about-hero-text {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 460px;
-      margin-bottom: 32px;
-    }
+        /* Plain intro paragraph */
+        .about-hero-text {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 460px;
+            margin-bottom: 32px;
+        }
 
-    /* Misión / Visión block */
-    .about-mv {
-      max-width: 460px;
-      margin-bottom: 28px;
-    }
+        /* Misión / Visión block */
+        .about-mv {
+            max-width: 460px;
+            margin-bottom: 28px;
+        }
 
-    .about-mv-label {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--dark);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1.5px solid rgba(0,0,0,0.12);
-    }
+        .about-mv-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--dark);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid rgba(0, 0, 0, 0.12);
+        }
 
-    .about-mv-text {
-      font-size: 0.88rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.75;
-      margin-top: 10px;
-    }
+        .about-mv-text {
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-top: 10px;
+        }
 
-    /* Right: image column */
-    .about-right {
-      position: relative;
-      height: 100%;
-      min-height: calc(100vh - 80px);
-      overflow: hidden;
-    }
+        /* Right: image column */
+        .about-right {
+            position: relative;
+            height: 100%;
+            min-height: calc(100vh - 80px);
+            overflow: hidden;
+        }
 
-    /* Image container — real photo fills the whole column */
-    .about-photo {
-      width: 100%;
-      height: 100%;
-      min-height: calc(100vh - 80px);
-      position: relative;
-      background: #c8c8c8;
-    }
+        /* Image container — real photo fills the whole column */
+        .about-photo {
+            width: 100%;
+            height: 100%;
+            min-height: calc(100vh - 80px);
+            position: relative;
+            background: #c8c8c8;
+        }
 
-    /* Real image — covers the entire column */
-    .about-photo img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
+        /* Real image — covers the entire column */
+        .about-photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--bg);
-      padding: 60px 52px 70px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      align-items: start;
-      border-top: 1px solid rgba(0,0,0,0.08);
-    }
+        /* ── FOOTER ── */
+        footer {
+            background: var(--bg);
+            padding: 60px 52px 70px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            align-items: start;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
 
-    .footer-brand { grid-column: 1 / 3; }
+        .footer-brand {
+            grid-column: 1 / 3;
+        }
 
-    .footer-title {
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: var(--dark);
-      margin-bottom: 18px;
-      line-height: 1.1;
-    }
+        .footer-title {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin-bottom: 18px;
+            line-height: 1.1;
+        }
 
-    .footer-col h4 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--dark);
-      margin-bottom: 20px;
-      letter-spacing: -0.01em;
-    }
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
 
-    .footer-col p,
-    .footer-col a {
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: #333;
-      line-height: 1.8;
-      text-decoration: none;
-      display: block;
-    }
-  </style>
+        .footer-col p,
+        .footer-col a {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #333;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* =========================
+   RESPONSIVE FIXES ONLY
+========================= */
+
+        /* Tablets */
+        @media (max-width: 1024px) {
+            .about-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .about-right {
+                min-height: 400px;
+            }
+
+            .about-photo {
+                min-height: 400px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            /* NAV */
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            /* HERO ABOUT */
+            .about-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .about-left {
+                padding: 40px 20px;
+            }
+
+            .about-hero-title {
+                font-size: 2.2rem;
+            }
+
+            .about-hero-text,
+            .about-mv,
+            .about-desc {
+                max-width: 100%;
+            }
+
+            .about-right {
+                min-height: 300px;
+            }
+
+            .about-photo {
+                min-height: 300px;
+            }
+
+            /* FOOTER */
+            footer {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+                gap: 30px;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="brand" href="../index.html">Sabaoth Elyah</a>
-  <ul class="nav-links">
-    <li><a href="services.html">Servicios</a></li>
-    <li><a href="aboutUs.html" class="active">Acerca de</a></li>
-    <li><a href="contact.html">Contacto</a></li>
-  </ul>
-</nav>
+    <!-- NAV -->
+    <nav>
+        <a class="brand" href="../index.html">Sabaoth Elyah</a>
+        <ul class="nav-links">
+            <li><a href="services.html">Servicios</a></li>
+            <li><a href="aboutUs.html" class="active">Acerca de</a></li>
+            <li><a href="contact.html">Contacto</a></li>
+        </ul>
+    </nav>
 
-<!-- HERO ABOUT -->
-<section class="about-hero">
+    <!-- HERO ABOUT -->
+    <section class="about-hero">
 
-  <!-- Left: text -->
-  <div class="about-left">
-    <h1 class="about-hero-title">Quiénes somos</h1>
+        <!-- Left: text -->
+        <div class="about-left">
+            <h1 class="about-hero-title">Quiénes somos</h1>
 
-    <p class="about-hero-text">
-      SABAOTH es una empresa especializada en servicios de perforación y voladura de roca en el Perú. Brindamos servicios al sector minero y construcción, y contamos con equipos propios de marca Sandvik, Jun Jin, Epiroc y SooSan, para diámetros de perforación de 2.5 – 5.5 pulg.
-    </p>
+            <p class="about-hero-text">
+                SABAOTH es una empresa especializada en servicios de perforación y voladura de roca en el Perú.
+                Brindamos servicios al sector minero y construcción, y contamos con equipos propios de marca Sandvik,
+                Jun Jin, Epiroc y SooSan, para diámetros de perforación de 2.5 – 5.5 pulg.
+            </p>
 
-    <div class="about-mv">
-      <p class="about-mv-label">Misión</p>
-      <p class="about-mv-text">
-        Brindar servicios integrales de perforación y voladura de roca con altos estándares de seguridad, calidad y eficiencia, contribuyendo al desarrollo de los sectores minero y de construcción en el Perú. Nos enfocamos en ofrecer soluciones técnicas confiables mediante el uso de tecnología especializada, personal capacitado y equipos de alto rendimiento.
-      </p>
-    </div>
+            <div class="about-mv">
+                <p class="about-mv-label">Misión</p>
+                <p class="about-mv-text">
+                    Brindar servicios integrales de perforación y voladura de roca con altos estándares de seguridad,
+                    calidad y eficiencia, contribuyendo al desarrollo de los sectores minero y de construcción en el
+                    Perú. Nos enfocamos en ofrecer soluciones técnicas confiables mediante el uso de tecnología
+                    especializada, personal capacitado y equipos de alto rendimiento.
+                </p>
+            </div>
 
-    <div class="about-mv">
-      <p class="about-mv-label">Visión</p>
-      <p class="about-mv-text">
-        Ser una empresa líder en el Perú en servicios de perforación, voladura y soluciones integrales para la industria minera y de construcción, reconocida por su innovación, excelencia operativa, seguridad y compromiso con el desarrollo sostenible.
-      </p>
-    </div>
-  </div>
+            <div class="about-mv">
+                <p class="about-mv-label">Visión</p>
+                <p class="about-mv-text">
+                    Ser una empresa líder en el Perú en servicios de perforación, voladura y soluciones integrales para
+                    la industria minera y de construcción, reconocida por su innovación, excelencia operativa, seguridad
+                    y compromiso con el desarrollo sostenible.
+                </p>
+            </div>
+        </div>
 
-  <!-- Right: image -->
-  <div class="about-right">
-    <div class="about-photo">
-      <!-- Replace src with your image, e.g. "../assets/about.jpeg" -->
-      <img src="../images/1568848.jpeg" alt="Sabaoth Elyah"/>
-    </div>
-  </div>
+        <!-- Right: image -->
+        <div class="about-right">
+            <div class="about-photo">
+                <!-- Replace src with your image, e.g. "../assets/about.jpeg" -->
+                <img src="../images/1568848.jpeg" alt="Sabaoth Elyah" />
+            </div>
+        </div>
 
-</section>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">
-    <h2 class="footer-title">Sabaoth Elyah</h2>
-  </div>
-  <div class="footer-col">
-    <h4>Ubicación</h4>
-    <p>Av. Los Nogales, 251<br>El Agustino, Lima</p>
-  </div>
-  <div class="footer-col">
-    <h4>Contacto</h4>
-    <a href="mailto:sabaothelyah@hotmail.com">sabaothelyah@hotmail.com</a>
-    <a href="tel:+51995995799">(+51) 995 995 799</a>
-  </div>
-</footer>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">
+            <h2 class="footer-title">Sabaoth Elyah</h2>
+        </div>
+        <div class="footer-col">
+            <h4>Ubicación</h4>
+            <p>Av. Los Nogales, 251<br>El Agustino, Lima</p>
+        </div>
+        <div class="footer-col">
+            <h4>Contacto</h4>
+            <a href="mailto:sabaothelyah@hotmail.com">sabaothelyah@hotmail.com</a>
+            <a href="tel:+51995995799">(+51) 995 995 799</a>
+        </div>
+    </footer>
 
 </body>
+
 </html>
